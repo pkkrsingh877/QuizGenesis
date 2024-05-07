@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe App</title>
+    <title>QuizGenesis</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
 </head>
 
@@ -13,8 +13,21 @@
         {% include "utilities/navbar.html" %}
     </header>
     <main class="section">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="notification is-info" id="notification">
+            <button class="delete" id="deleteNotificationButton"></button>
+            {{ message|e }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        {% endwith %}
         {% block main %}{% endblock %}
     </main>
+    <script src="{{ url_for('static', filename='js/flash_message.js') }}"></script>
 </body>
 
 </html>
