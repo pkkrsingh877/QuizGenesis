@@ -1,5 +1,9 @@
 from flask import redirect, Blueprint, render_template, request, flash
 from website.modules.validate_password import validate_password
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from . import db   ##means from __init__.py import db
+from .models import User
 
 auth = Blueprint('auth', '__name__')
 
@@ -39,6 +43,9 @@ def signup():
         elif username == "":
             flash("Username can't be empty", category="failure")
         else:
+            newUser = User(username=username, password=generate_password_hash(password), name=name, email=email)
+            db.session.add(newUser)
+            db.session.commit()
             flash("Account Created", category="success")
 
     return redirect('/')
