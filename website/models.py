@@ -8,8 +8,8 @@ class Quiz(db.Model):
   name = db.Column(db.String(255), unique=True, nullable=False)
   join_code = db.Column(db.String(16), unique=True, nullable=False, default=''.join(random.choices(string.ascii_uppercase + string.digits, k=16)))
   questions = db.relationship('Question', backref='quiz', lazy=True)
-  created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # ForeignKey on the correct column (user.id)
-  created_by = db.relationship('User', backref='created_quizzes')  # Relationship for creator
+  created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # ForeignKey
+  created_by = db.relationship('User', backref='user_created_quizzes')  # New backref name
 
 class Question(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -38,5 +38,5 @@ class User(db.Model, UserMixin):
   email = db.Column(db.String(150), unique=True, nullable=False)
   password = db.Column(db.Text)
   results = db.relationship('Result')
-  created_quizzes = db.relationship('Quiz', backref='created_by', lazy=True)  # Collection name for clarity
   # You might also consider adding timestamps for user creation using db.DateTime
+  # user_created_quizzes (renamed backref) is used to access quizzes created by the user
