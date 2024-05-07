@@ -1,0 +1,32 @@
+{% extends 'layouts.html' %}
+
+{% block main %}
+
+<h2 class="title">Update Profile</h2>
+
+<form class="box" action="/update-profile" method="post">
+    <div class="field">
+        <label class="label">First Name</label>
+        <div class="control">
+            <input class="input" type="text" name="first_name" placeholder="First Name" required />
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Middle Name</label>
+        <div class="control">
+            <input class="input" type="text" name="middle_name" placeholder="Middle Name" />
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Last Name</label>
+        <div class="control">
+            <input class="input" type="text" name="last_name" placeholder="Last Name" required />
+        </div>
+    </div>
+
+    <button class="button is-primary" type="submit">Update Profile</button>
+</form>
+
+{% endblock %}
