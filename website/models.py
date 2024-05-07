@@ -8,6 +8,7 @@ class Quiz(db.Model):
   name = db.Column(db.String(255), unique=True, nullable=False)
   join_code = db.Column(db.String(16), unique=True, nullable=False, default=''.join(random.choices(string.ascii_uppercase + string.digits, k=16)))
   questions = db.relationship('Question', backref='quiz', lazy=True)
+  created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # ForeignKey on the correct column (user.id)
   created_by = db.relationship('User', backref='created_quizzes')  # Relationship for creator
 
 class Question(db.Model):
@@ -31,7 +32,8 @@ class Result(db.Model):
 
 
 class User(db.Model, UserMixin):
-  username = db.Column(db.String(100), primary_key=True, unique=True, nullable=False)
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # Primary key should be of type Integer
+  username = db.Column(db.String(100), unique=True, nullable=False)
   name = db.Column(db.Text)
   email = db.Column(db.String(150), unique=True, nullable=False)
   password = db.Column(db.Text)
