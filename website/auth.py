@@ -17,12 +17,20 @@ def login():
 
         if not validate_password(password):
             flash("1 uppercase, 1 lowercase, 1 digit, min length = 8, max length = 20, 1 special character",  category="failure")
+            return redirect('/')
         elif username == "":
             flash("Username can't be empty", category="failure")
+            return redirect('/')
         else:
-            flash("Login Successful", category="success")
-
+            user = User.query.filter_by(username=username).first()
+            print(user)
+            if user:
+                if check_password_hash(user.password, password):
+                    flash("Login Successful", category="success")
+                    return redirect('/')
+    flash("Invalid Username/Password", category="failure")
     return redirect('/')
+            
 
 @auth.route('/signup', methods=['GET','POST'])
 def signup():
@@ -34,7 +42,11 @@ def signup():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        if not validate_password(password):
+        user = User.query.filter_by(username=username).first()
+
+        if user:
+            flash("Username not available")
+        elif not validate_password(password):
             flash("1 uppercase, 1 lowercase, 1 digit, min length = 8, max length = 20, 1 special character",  category="failure")
         elif len(email) < 6:
             flash("Email must be of length greater than 6",  category="failure")
