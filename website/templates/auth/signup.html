@@ -3,23 +3,16 @@
 {% block main %}
 <form class="box" action="/signup" method="post">
     <div class="field">
-        <label class="label" for="first_name">First Name</label>
+        <label class="label" for="name">Name</label>
         <div class="control">
-            <input class="input" type="text" name="first_name" id="first_name" placeholder="First Name" required />
+            <input class="input" type="text" name="name" id="name" placeholder="Full Name" required />
         </div>
     </div>
 
     <div class="field">
-        <label class="label" for="middle_name">Middle Name</label>
+        <label class="label" for="username">Username</label>
         <div class="control">
-            <input class="input" type="text" name="middle_name" id="middle_name" placeholder="Middle Name" />
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label" for="last_name">Last Name</label>
-        <div class="control">
-            <input class="input" type="text" name="last_name" id="last_name" placeholder="Last Name" required />
+            <input class="input" type="text" name="username" id="username" placeholder="Username" required />
         </div>
     </div>
 
