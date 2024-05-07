@@ -1,0 +1,31 @@
+{% extends "layouts.html" %}
+
+{% block main %}
+
+<div class="container">
+    <h1 class="title">Welcome to the Quiz App!</h1>
+    <p class="subtitle">Test your knowledge and learn something new.</p>
+
+    <div class="columns">
+        <div class="column">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title">Take Quiz</p>
+                    <p class="subtitle">Challenge yourself with quizzes on various topics.</p>
+                    <a href="/quizzes" class="button is-primary">Start Quiz</a>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title">Create Quiz</p>
+                    <p class="subtitle">Craft your own quizzes and share them with others.</p>
+                    <a href="/quizzes/create" class="button is-primary">Create Quiz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

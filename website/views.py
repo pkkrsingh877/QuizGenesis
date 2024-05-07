@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 '''
 So basically Blueprint is used to create routes
@@ -10,4 +10,4 @@ views = Blueprint('views', '__name__')
 
 @views.route('/')
 def home():
-    pass
+    return render_template('home/index.html')
