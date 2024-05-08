@@ -1,0 +1,90 @@
+{% extends "layouts.html" %}
+
+{% block main %}
+<div class="container">
+    <h1 class="title">Create Quiz</h1>
+    <form method="POST" action="/quiz/create">
+        <div class="field">
+            <label class="label">Quiz Name</label>
+            <div class="control">
+                <input class="input" type="text" name="quiz_name" placeholder="Enter quiz name" required>
+            </div>
+        </div>
+
+        <div id="questions">
+            <div class="field">
+                <label class="label">Question</label>
+                <div class="control">
+                    <input class="input" type="text" name="question[]" placeholder="Enter question" required>
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="option[]" placeholder="Option 1" required>
+                </div>
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="option[]" placeholder="Option 2" required>
+                </div>
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="option[]" placeholder="Option 3" required>
+                </div>
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="option[]" placeholder="Option 4" required>
+                </div>
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="correct_option[]" placeholder="Correct Option" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-info" type="button" id="add_question">Add Question</button>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const addButton = document.getElementById('add_question');
+        const questionsDiv = document.getElementById('questions');
+
+        addButton.addEventListener('click', () => {
+            const newQuestion = `
+            <div class="field">
+                <label class="label">Question</label>
+                <div class="control">
+                    <input class="input" type="text" name="question[]" placeholder="Enter question" required>
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="option[]" placeholder="Option 1" required>
+                </div>
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="option[]" placeholder="Option 2" required>
+                </div>
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="option[]" placeholder="Option 3" required>
+                </div>
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="option[]" placeholder="Option 4" required>
+                </div>
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="correct_option[]" placeholder="Correct Option" required>
+                </div>
+            </div>
+            `;
+
+            questionsDiv.insertAdjacentHTML('beforeend', newQuestion);
+        });
+    });
+</script>
+{% endblock %}

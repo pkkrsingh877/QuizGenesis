@@ -5,8 +5,8 @@ import string
 
 class Quiz(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  name = db.Column(db.String(255), unique=True, nullable=False)
-  join_code = db.Column(db.String(16), unique=True, nullable=False, default=''.join(random.choices(string.ascii_uppercase + string.digits, k=16)))
+  name = db.Column(db.String(255), nullable=False)
+  join_code = db.Column(db.String(16), unique=True, nullable=False)
   questions = db.relationship('Question', backref='quiz', lazy=True)
   created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # ForeignKey
   created_by = db.relationship('User', backref='user_created_quizzes')  # New backref name
