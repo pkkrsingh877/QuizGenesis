@@ -5,19 +5,29 @@ from .modules.generate_join_code import generate_join_code
 quiz = Blueprint('quiz', '__name__')
 
 @quiz.route('/')
-def join():
-    # Retrieve the first quiz from the database
-    quiz = Quiz.query.first()
-    print("Quiz:")
-    print(quiz.id, quiz.name)  # Print quiz attributes individually for better readability
+def index():
+    return render_template('quiz/index.html')
 
-    # Retrieve questions associated with the quiz
-    questions = Question.query.filter_by(quiz_id=quiz.id).all()
-    print(questions)
-    print("Questions:")
-    for question in questions:
-        print(question.id, question.question, question.option1, question.option2, question.option3, question.option4, question.correct_option)  # Print question attributes individually
-    return render_template('quiz/join.html')
+@quiz.route('/join', methods = ['POST'])
+def join():
+
+    # Get Join Code from User Form
+    join_code = request.form.get('join_code')
+
+    quiz = Quiz.query.filter_by(join_code=join_code).first()
+
+    if quiz:
+        # Retrieve questions associated with the quiz
+        questions = Question.query.filter_by(quiz_id=quiz.id).all()
+        print(questions)
+        for question in questions:
+            print(question.question)
+            print("Option 1", question.option1)
+            print("Option 2", question.option2)
+            print("Option 3", question.option3)
+            print("Option 4", question.option4)
+    
+    return "<div>Join Code reaching backend successfully</div>"
 
 @quiz.route('/create', methods = ['GET','POST'])
 def create():
@@ -56,4 +66,4 @@ def create():
         # Commit changes to the database
         db.session.commit()
         
-        return "<div>Data Recieved by backend</div>"
+        return f"<div>Data Recieved by backend <br> Join Code is {new_quiz.join_code} </div>"
