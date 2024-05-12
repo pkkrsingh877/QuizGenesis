@@ -12,7 +12,7 @@ auth = Blueprint('auth', '__name__')
 @auth.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'GET':
-        return render_template('auth/login.html')
+        return render_template('auth/login.html', user=None)
     else:
         username = request.form.get('username')
         password = request.form.get('password')
@@ -37,7 +37,7 @@ def login():
 @auth.route('/signup', methods=['GET','POST'])
 def signup():
     if request.method == 'GET':
-        return render_template('auth/signup.html')
+        return render_template('auth/signup.html', user=None)
     else:
         username = request.form.get('username')
         name = request.form.get('name')

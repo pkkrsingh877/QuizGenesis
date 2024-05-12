@@ -2,13 +2,17 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from .models import db, Quiz, Question 
 from .modules.generate_join_code import generate_join_code
 
+from flask_login import login_required, current_user
+
 quiz = Blueprint('quiz', '__name__')
 
 @quiz.route('/')
+@login_required
 def index():
-    return render_template('quiz/index.html')
+    return render_template('quiz/index.html', user=current_user)
 
 @quiz.route('/join', methods = ['POST'])
+@login_required
 def join():
 
     # Get Join Code from User Form
@@ -30,9 +34,10 @@ def join():
     return "<div>Join Code reaching backend successfully</div>"
 
 @quiz.route('/create', methods = ['GET','POST'])
+@login_required
 def create():
     if request.method == 'GET':
-        return render_template('quiz/create.html')
+        return render_template('quiz/create.html', user=current_user)
     else:
         quiz_name = request.form.get('quiz_name')
         questions = request.form.getlist('question[]')

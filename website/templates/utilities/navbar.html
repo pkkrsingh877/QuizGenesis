@@ -15,7 +15,7 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
 
-            <a class="navbar-item" href="/join">
+            <a class="navbar-item" href="/quiz">
                 Enter Code
             </a>
 
@@ -28,12 +28,18 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
+                    {% if user.is_authenticated: %}
+                    <a class="button is-primary" href="/signout">
+                        <strong>Signout</strong>
+                    </a>
+                    {% else %}
                     <a class="button is-primary" href="/signup">
                         <strong>Sign up</strong>
                     </a>
                     <a class="button is-light" href="/login">
                         Log in
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
