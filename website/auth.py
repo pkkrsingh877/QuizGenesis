@@ -1,4 +1,4 @@
-from flask import redirect, Blueprint, render_template, request, flash
+from flask import redirect, Blueprint, render_template, request, flash, url_for
 from website.modules.validate_password import validate_password
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -29,9 +29,9 @@ def login():
                 if check_password_hash(user.password, password):
                     login_user(user, remember=True)
                     flash("User Logged In", category="success")
-                    return redirect('/')
+                    return redirect(url_for('views.home'))
     flash("Invalid Username/Password", category="failure")
-    return redirect('/')
+    return redirect(url_for('auth.login'))
             
 
 @auth.route('/signup', methods=['GET','POST'])
@@ -61,10 +61,14 @@ def signup():
             db.session.add(newUser)
             db.session.commit()
             flash("Account Created & User Logged In", category="success")
-            # login_user(user, remember=True)
+            user = newUser
+            login_user(user, remember=True)
 
-    return redirect('/')
+    return redirect(url_for('views.home'))
 
-@auth.route('/signout', methods=['GET','POST'])
+@auth.route('/signout')
+@login_required
 def signout():
-    return "<h1>Log out</h1>"
+    logout_user()
+    flash('User Logged Out', category="success")
+    return redirect(url_for('auth.login'))

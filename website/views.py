@@ -1,13 +1,10 @@
 from flask import Blueprint, render_template
 
-'''
-So basically Blueprint is used to create routes
-and we can use the name of blueprint to create
-routes that go within that blueprint.
-'''
+from flask_login import login_required, current_user
 
 views = Blueprint('views', '__name__')
 
 @views.route('/')
+@login_required
 def home():
     return render_template('home/index.html')
