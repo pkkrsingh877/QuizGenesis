@@ -2,6 +2,8 @@ from flask import redirect, Blueprint, render_template, request, flash
 from website.modules.validate_password import validate_password
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from flask_login import login_user, logout_user, login_required, current_user
+
 from . import db   ##means from __init__.py import db
 from .models import User
 
@@ -23,10 +25,10 @@ def login():
             return redirect('/')
         else:
             user = User.query.filter_by(username=username).first()
-            print(user)
             if user:
                 if check_password_hash(user.password, password):
-                    flash("Login Successful", category="success")
+                    login_user(user, remember=True)
+                    flash("User Logged In", category="success")
                     return redirect('/')
     flash("Invalid Username/Password", category="failure")
     return redirect('/')
@@ -58,7 +60,8 @@ def signup():
             newUser = User(username=username, password=generate_password_hash(password), name=name, email=email)
             db.session.add(newUser)
             db.session.commit()
-            flash("Account Created", category="success")
+            flash("Account Created & User Logged In", category="success")
+            # login_user(user, remember=True)
 
     return redirect('/')
 

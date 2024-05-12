@@ -1,5 +1,6 @@
 from . import db
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 import random
 import string
 
@@ -7,9 +8,8 @@ class Quiz(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   name = db.Column(db.String(255), nullable=False)
   join_code = db.Column(db.String(16), unique=True, nullable=False)
-  questions = db.relationship('Question', backref='quiz', lazy=True)
-  created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # ForeignKey
-  created_by = db.relationship('User', backref='user_created_quizzes')  # New backref name
+  creator_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+  created_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
 class Question(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -20,6 +20,7 @@ class Question(db.Model):
   option4 = db.Column(db.Text)
   correct_option = db.Column(db.Text)
   quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
+  created_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
 class Result(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -27,8 +28,9 @@ class Result(db.Model):
   incorrect = db.Column(db.SmallInteger)
   percentage = db.Column(db.Float)
   total = db.Column(db.SmallInteger)
-  username = db.Column(db.String(150), db.ForeignKey('user.username'))
+  taker_id = db.Column(db.String(150), db.ForeignKey('user.id'))
   quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
+  created_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
 
 class User(db.Model, UserMixin):
@@ -37,6 +39,5 @@ class User(db.Model, UserMixin):
   name = db.Column(db.Text)
   email = db.Column(db.String(150), unique=True, nullable=False)
   password = db.Column(db.Text)
-  results = db.relationship('Result')
-  # You might also consider adding timestamps for user creation using db.DateTime
-  # user_created_quizzes (renamed backref) is used to access quizzes created by the user
+  created_at = db.Column(db.DateTime(timezone=True), default=func.now())
+  updated_at = db.Column(db.DateTime(timezone=True), default=func.now())
