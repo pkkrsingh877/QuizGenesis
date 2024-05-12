@@ -23,15 +23,9 @@ def join():
     if quiz:
         # Retrieve questions associated with the quiz
         questions = Question.query.filter_by(quiz_id=quiz.id).all()
-        print(questions)
-        for question in questions:
-            print(question.question)
-            print("Option 1", question.option1)
-            print("Option 2", question.option2)
-            print("Option 3", question.option3)
-            print("Option 4", question.option4)
     
-    return "<div>Join Code reaching backend successfully</div>"
+    # Pass quiz name and questions to the template
+    return render_template('quiz/attempt_quiz.html', quiz_name=quiz.name, questions=questions, user=current_user)
 
 @quiz.route('/create', methods = ['GET','POST'])
 @login_required
@@ -72,3 +66,9 @@ def create():
         db.session.commit()
         
         return f"<div>Data Recieved by backend <br> Join Code is {new_quiz.join_code} </div>"
+
+@quiz.route('/submit', methods=['POST'])
+@login_required
+def submit():
+    print(request.form)
+    return "<h1>Form Data Recieved</h1>"

@@ -1,0 +1,38 @@
+{% extends "layouts.html" %}
+
+{% block main %}
+<div class="container">
+    <h1 class="title">{{ quiz_name }}</h1>
+    <form method="POST" action="/quiz/submit">
+        {% for question in questions %}
+        <div class="box">
+            <h2 class="subtitle">{{ question.question }}</h2>
+            <div class="control">
+                <label class="radio">
+                    <input type="radio" name="answers[{{ question.id }}]" value="1" required>
+                    {{ question.option1 }}
+                </label>
+                <label class="radio">
+                    <input type="radio" name="answers[{{ question.id }}]" value="2" required>
+                    {{ question.option2 }}
+                </label>
+                <label class="radio">
+                    <input type="radio" name="answers[{{ question.id }}]" value="3" required>
+                    {{ question.option3 }}
+                </label>
+                <label class="radio">
+                    <input type="radio" name="answers[{{ question.id }}]" value="4" required>
+                    {{ question.option4 }}
+                </label>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
