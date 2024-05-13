@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from .models import db, Quiz, Question 
+from .models import db, Quiz, Question
 from .modules.generate_join_code import generate_join_code
 
 from flask_login import login_required, current_user
@@ -9,7 +9,7 @@ quiz = Blueprint('quiz', '__name__')
 @quiz.route('/')
 @login_required
 def index():
-    quiz = Quiz.query.all()
+    quiz = Quiz.query.filter_by(creator_id=current_user.id).all()
 
     if quiz:
         print(quiz)
@@ -45,7 +45,7 @@ def create():
         correct_options = request.form.getlist('correct_option[]')
 
         # Create a new quiz instance
-        new_quiz = Quiz(name=quiz_name,join_code=generate_join_code())
+        new_quiz = Quiz(name=quiz_name,join_code=generate_join_code(),creator_id=current_user.id)
         db.session.add(new_quiz)
         db.session.commit()
 
@@ -71,7 +71,7 @@ def create():
         # Commit changes to the database
         db.session.commit()
         
-        return f"<div>Data Recieved by backend <br> Join Code is {new_quiz.join_code} </div>"
+        return redirect(url_for('quiz.index'))
 
 @quiz.route('/submit', methods=['POST'])
 @login_required
