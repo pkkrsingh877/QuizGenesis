@@ -1,0 +1,23 @@
+{% extends 'layouts.html' %}
+
+{% block main %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Join Quiz</h1>
+        <form action="/quiz/join" method="POST">
+            <div class="field">
+                <label class="label">Join Code</label>
+                <div class="control">
+                    <input class="input" type="text" name="join_code" placeholder="Enter join code">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Join</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

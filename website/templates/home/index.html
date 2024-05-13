@@ -3,7 +3,7 @@
 {% block main %}
 
 <div class="container">
-    <h1 class="title">Welcome to the Quiz App!</h1>
+    <h1 class="title">Welcome, {{ current_user.name }} to the Quiz App!</h1>
     <p class="subtitle">Test your knowledge and learn something new.</p>
 
     <div class="columns">
@@ -12,7 +12,7 @@
                 <div class="card-content">
                     <p class="title">Take Quiz</p>
                     <p class="subtitle">Challenge yourself with quizzes on various topics.</p>
-                    <a href="/quizzes" class="button is-primary">Start Quiz</a>
+                    <a href="/quiz/join" class="button is-primary">Join Quiz</a>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
                 <div class="card-content">
                     <p class="title">Create Quiz</p>
                     <p class="subtitle">Craft your own quizzes and share them with others.</p>
-                    <a href="/quizzes/create" class="button is-primary">Create Quiz</a>
+                    <a href="/quiz/create" class="button is-primary">Create Quiz</a>
                 </div>
             </div>
         </div>

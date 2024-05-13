@@ -9,19 +9,19 @@
             <h2 class="subtitle">{{ question.question }}</h2>
             <div class="control">
                 <label class="radio">
-                    <input type="radio" name="answers[{{ question.id }}]" value="1" required>
+                    <input type="radio" name="answers[{{ question.id }}]" value="{{question.option1}}" required>
                     {{ question.option1 }}
                 </label>
                 <label class="radio">
-                    <input type="radio" name="answers[{{ question.id }}]" value="2" required>
+                    <input type="radio" name="answers[{{ question.id }}]" value="{{question.option2}}" required>
                     {{ question.option2 }}
                 </label>
                 <label class="radio">
-                    <input type="radio" name="answers[{{ question.id }}]" value="3" required>
+                    <input type="radio" name="answers[{{ question.id }}]" value="{{question.option3}}" required>
                     {{ question.option3 }}
                 </label>
                 <label class="radio">
-                    <input type="radio" name="answers[{{ question.id }}]" value="4" required>
+                    <input type="radio" name="answers[{{ question.id }}]" value="{{question.option4}}" required>
                     {{ question.option4 }}
                 </label>
             </div>

@@ -4,20 +4,28 @@
 
 <section class="section">
     <div class="container">
-        <h1 class="title">Join Quiz</h1>
-        <form action="/quiz/join" method="POST">
-            <div class="field">
-                <label class="label">Join Code</label>
-                <div class="control">
-                    <input class="input" type="text" name="join_code" placeholder="Enter join code">
+        <h1 class="title">Dashboard</h1>
+        <a href="/join" class="subtitle">Join Quiz</a>
+        {% for quiz in quizzes %}
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    {{ quiz.name }}
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p>Join Code: {{ quiz.join_code }}</p>
                 </div>
             </div>
-            <div class="field">
-                <div class="control">
-                    <button class="button is-primary" type="submit">Join</button>
+            <div class="card-footer">
+                <div class="content">
+                    <p class="subtitle">Created At: {{ quiz.created_at }}</p>
                 </div>
             </div>
-        </form>
+        </div>
+        {% endfor %}
     </div>
 </section>
+
 {% endblock %}

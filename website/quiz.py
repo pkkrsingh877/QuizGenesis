@@ -9,23 +9,29 @@ quiz = Blueprint('quiz', '__name__')
 @quiz.route('/')
 @login_required
 def index():
-    return render_template('quiz/index.html', user=current_user)
-
-@quiz.route('/join', methods = ['POST'])
-@login_required
-def join():
-
-    # Get Join Code from User Form
-    join_code = request.form.get('join_code')
-
-    quiz = Quiz.query.filter_by(join_code=join_code).first()
+    quiz = Quiz.query.all()
 
     if quiz:
-        # Retrieve questions associated with the quiz
-        questions = Question.query.filter_by(quiz_id=quiz.id).all()
-    
+        print(quiz)
+        print(current_user.id)
     # Pass quiz name and questions to the template
-    return render_template('quiz/attempt_quiz.html', quiz_name=quiz.name, questions=questions, user=current_user)
+    return render_template('quiz/index.html', user=current_user, quizzes=quiz)
+
+@quiz.route('/join', methods = ['GET','POST'])
+@login_required
+def join():
+    if request.method == 'GET':
+        return render_template('quiz/join_quiz.html', user=current_user)
+    else:
+        # Get Join Code from User Form
+        join_code = request.form.get('join_code')
+        quiz = Quiz.query.filter_by(join_code=join_code).first()
+
+        if quiz:
+            # Retrieve questions associated with the quiz
+            questions = Question.query.filter_by(quiz_id=quiz.id).all()
+        # Pass quiz name and questions to the template
+        return render_template('quiz/attempt_quiz.html', quiz_name=quiz.name, questions=questions, user=current_user)
 
 @quiz.route('/create', methods = ['GET','POST'])
 @login_required
