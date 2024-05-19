@@ -52,7 +52,7 @@ def update_profile():
         flash('Profile updated successfully')
         return redirect(url_for('views.view_profile'))
 
-@views.route('/delete_profile', methods=['DELETE'])
+@views.route('/delete_profile')
 @login_required
 def delete_profile():
     # This will allow users to delete their account
@@ -66,4 +66,4 @@ def delete_profile():
     db.session.commit()
 
     flash('Account Deleted Successfully')
-    redirect(url_for('auth.signup'))
+    return redirect(url_for('auth.signup'))
