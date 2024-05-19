@@ -4,25 +4,25 @@
 
 <h2 class="title">Update Profile</h2>
 
-<form class="box" action="/update-profile" method="post">
+<form class="box" action="/update_profile" method="post">
     <div class="field">
-        <label class="label">First Name</label>
+        <label class="label">Name</label>
         <div class="control">
-            <input class="input" type="text" name="first_name" placeholder="First Name" required />
+            <input class="input" type="text" name="name" placeholder="Name" value="{{ user.name }}" required />
         </div>
     </div>
 
     <div class="field">
-        <label class="label">Middle Name</label>
+        <label class="label">Username</label>
         <div class="control">
-            <input class="input" type="text" name="middle_name" placeholder="Middle Name" />
+            <input class="input" type="text" name="username" placeholder="Username" value="{{ user.username }}" />
         </div>
     </div>
 
     <div class="field">
-        <label class="label">Last Name</label>
+        <label class="label">Email</label>
         <div class="control">
-            <input class="input" type="text" name="last_name" placeholder="Last Name" required />
+            <input class="input" type="text" name="email" placeholder="Email" value="{{ user.email }}" required />
         </div>
     </div>
 

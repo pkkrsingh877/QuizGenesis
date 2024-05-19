@@ -1,35 +1,47 @@
 {% extends 'layouts.html' %}
 
 {% block main %}
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            User Profile
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <div class="field">
+                                <label class="label">Name:</label>
+                                <div class="control">
+                                    <p>{{ user.name }}</p>
+                                </div>
+                            </div>
 
-<div class="user-profile">
-    <h2>User Profile</h2>
-    <div class="field">
-        <label class="label">First Name:</label>
-        <div class="control">
-            <p>{{ user.first_name }}</p>
+                            <div class="field">
+                                <label class="label">Username:</label>
+                                <div class="control">
+                                    <p>{{ user.username }}</p>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Email:</label>
+                                <div class="control">
+                                    <p>{{ user.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="/update_profile" class="card-footer-item">Edit</a>
+                        <a href="#" class="card-footer-item">Delete</a>
+                    </footer>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="field">
-        <label class="label">Middle Name:</label>
-        <div class="control">
-            <p>{{ user.middle_name }}</p>
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label">Last Name:</label>
-        <div class="control">
-            <p>{{ user.last_name }}</p>
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label">Email:</label>
-        <div class="control">
-            <p>{{ user.email }}</p>
-        </div>
-    </div>
-</div>
+</section>
 {% endblock %}

@@ -76,5 +76,7 @@ def create():
 @quiz.route('/submit', methods=['POST'])
 @login_required
 def submit():
-    print(request.form)
+    
+        
+
     return "<h1>Form Data Recieved</h1>"
