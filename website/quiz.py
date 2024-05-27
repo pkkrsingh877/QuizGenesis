@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from .models import db, Quiz, Question
+from .models import db, Quiz, Question, Result
 from .modules.generate_join_code import generate_join_code
 
 from flask_login import login_required, current_user
@@ -76,7 +76,40 @@ def create():
 @quiz.route('/submit', methods=['POST'])
 @login_required
 def submit():
-    
-        
+    # Retrieve all answers from the form
+    answers = request.form.to_dict()
+    correct = 0
+    incorrect = 0
+    total_questions = 0
 
-    return "<h1>Form Data Recieved</h1>"
+    # Iterate over each answer submitted
+    for key, user_answer in answers.items():
+        if key.startswith('answers['):
+            question_id = key[8:-1]  # Extract question ID from key, e.g., 'answers[12]' -> '12'
+            question = Question.query.get(question_id)
+            if question and user_answer == question.correct_option:
+                correct += 1
+            else:
+                incorrect += 1
+            total_questions += 1
+    
+    # Calculate the percentage
+    if total_questions > 0:
+        percentage = (correct / total_questions) * 100
+    else:
+        percentage = 0
+
+    # Create and save the result to the database
+    new_result = Result(
+        correct= correct,
+        incorrect=incorrect,
+        percentage=percentage,
+        total=total_questions,
+        taker_id=current_user.id,
+        quiz_id=question.quiz_id if question else None
+    )
+    db.session.add(new_result)
+    db.session.commit()
+    
+    quiz = Quiz.query.get(new_result.quiz_id)
+    return render_template('quiz/results.html', correct=correct, total_questions=total_questions, percentage=percentage, user=current_user, quiz_name=quiz.name if quiz else None)

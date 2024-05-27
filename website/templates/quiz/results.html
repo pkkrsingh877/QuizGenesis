@@ -1,0 +1,29 @@
+{% extends "layouts.html" %}
+
+{% block main %}
+<section class="section">
+    <div class="container">
+        <div class="card">
+            {% if quiz_name %}
+            <header class="card-header">
+                <p class="card-header-title">
+                    Quiz Results for "{{ quiz_name }}"
+                </p>
+            </header>
+            {% endif %}
+            <div class="card-content">
+                <div class="content">
+                    <p><strong>Score:</strong> {{ correct }} out of {{ total_questions }}</p>
+                    <p><strong>Correct Answers:</strong> {{ correct }}</p>
+                    <p><strong>Incorrect Answers:</strong> {{ total_questions - correct }}</p>
+                    <p><strong>Total Questions:</strong> {{ total_questions }}</p>
+                    <p><strong>Percentage:</strong> {{ percentage }}%</p>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="{{ url_for('quiz.index') }}" class="card-footer-item">Back to Home</a>
+            </footer>
+        </div>
+    </div>
+</section>
+{% endblock %}
