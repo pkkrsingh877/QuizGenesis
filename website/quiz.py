@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import db, Quiz, Question, Result
 from .modules.generate_join_code import generate_join_code
 
@@ -30,8 +30,13 @@ def join():
         if quiz:
             # Retrieve questions associated with the quiz
             questions = Question.query.filter_by(quiz_id=quiz.id).all()
-        # Pass quiz name and questions to the template
-        return render_template('quiz/attempt_quiz.html', quiz_name=quiz.name, questions=questions, user=current_user)
+
+            if questions:
+                # Pass quiz name and questions to the template
+                return render_template('quiz/attempt_quiz.html', quiz_name=quiz.name, questions=questions, user=current_user)
+        
+        flash("Incorrect Join Code", category="failure")
+        return redirect(url_for('quiz.join'))
 
 @quiz.route('/create', methods = ['GET','POST'])
 @login_required
